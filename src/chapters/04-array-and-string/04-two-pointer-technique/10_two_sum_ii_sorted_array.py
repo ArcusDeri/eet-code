@@ -6,13 +6,16 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        left, right = 0, len(numbers) - 1
-        while left < right:
-            sum = numbers[left] + numbers[right]
-            if sum == target:
-                return [left + 1, right + 1]
-            elif sum > target:
-                right -= 1
+        # Intuition:
+        # Use two pointers on opposite ends.
+        # Spin until the sum equals the target.
+        # If the sum is lower than the target,
+        # increment `l`. Increment `r` otherwise.
+        l, r = 0, len(numbers) - 1
+        while numbers[l] + numbers[r] != target:
+            if numbers[l] + numbers[r] < target:
+                l += 1
             else:
-                left += 1
-        return None
+                r -= 1
+        # Description says the array is 1-indexed so add 1.
+        return [l + 1, r + 1]
