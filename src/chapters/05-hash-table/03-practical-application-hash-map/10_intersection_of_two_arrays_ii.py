@@ -10,7 +10,7 @@ class Solution(object):
         # Count occurrences of numbers in nums1.
         # Iterate the second list and append `n`
         # as long as it's in the map and mapped
-        # avlue is higher than 0.
+        # value is higher than 0.
         freq = {}
         for n in nums1:
             freq[n] = freq.get(n, 0) + 1
