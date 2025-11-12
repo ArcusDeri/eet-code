@@ -1,8 +1,8 @@
 # https://leetcode.com/explore/learn/card/linked-list/209/singly-linked-list/1290/
 class Node(object):
-    def __init__(self, val, next = None):
-        self.val = val
-        self.next = next
+    def __init__(self, v, n = None):
+        self.val = v
+        self.next = n
 
 class MyLinkedList(object):
     def __init__(self):
@@ -13,38 +13,36 @@ class MyLinkedList(object):
         :type index: int
         :rtype: int
         """
-        current = self.head
+        c = self.head
         i = 0
-        while i < index:
-            if current is None:
+        while c:
+            if i == index:
+                return c.val
+            elif i > index:
                 return -1
-            current = current.next
+            c = c.next
             i += 1
-        return current.val if current else -1
-        
+        return -1
 
     def addAtHead(self, val):
         """
         :type val: int
         :rtype: None
         """
-        n = Node(val, self.head)
-        self.head = n
-        
+        self.head = Node(val, self.head)
 
     def addAtTail(self, val):
         """
         :type val: int
         :rtype: None
         """
-        n = Node(val)
-        if self.head is None:
-            self.head = n
-            return
-        current = self.head
-        while current and current.next:
-            current = current.next
-        current.next = n
+        c = self.head
+        while c and c.next:
+            c = c.next
+        if c:
+            c.next = Node(val)
+        else:
+            self.head = Node(val)
         
 
     def addAtIndex(self, index, val):
@@ -57,39 +55,31 @@ class MyLinkedList(object):
             self.addAtHead(val)
             return
         i = 1
-        current = self.head
-        while i < index:
-            if current is None:
+        c = self.head
+        while c and c.next:
+            if i == index:
+                c.next = Node(val, c.next)
                 return
-            current = current.next
             i += 1
-        if current is None:
+            c = c.next
+        if not c:
             return
-        current.next = Node(val, current.next)
-        
+        if i == index:
+            c.next = Node(val, c.next)
 
     def deleteAtIndex(self, index):
         """
         :type index: int
         :rtype: None
         """
-        if self.head is None:
-            return
-        if index == 0:
-            tmp = self.head
+        if index == 0 and self.head:
             self.head = self.head.next
-            tmp.next = None
             return
         i = 1
-        current = self.head
-        while i < index:
-            if current is None:
+        c = self.head
+        while c and c.next:
+            if i == index:
+                c.next = c.next.next
                 return
-            current = current.next
             i += 1
-        if current is None or current.next is None:
-            return
-
-        tmp = current.next.next
-        current.next.next = None
-        current.next = tmp
+            c = c.next
